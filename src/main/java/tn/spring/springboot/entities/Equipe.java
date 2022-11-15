@@ -22,10 +22,11 @@ public class Equipe implements Serializable {
     private String nomEquipe;
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
-    @JsonIgnore
     @OneToOne
-    private DetailEquipe detailEquipe;
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "equipes")
-    private Set<Etudiant>etudiants;
+    private DetailEquipe detailEquipe;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Etudiant> etudiants;
 }

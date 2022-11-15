@@ -10,6 +10,8 @@ public interface IEtudiantService {
     Etudiant updateEtudiant(Etudiant e);
     void deleteEtudiant (Long id);
     Etudiant getEtudiantById(Long id);
-    Etudiant findEtudiantByPrenomE(String prenom);
+    Etudiant findEtudiantByPrenomE(String prenomE);
+    Etudiant findEtudiantByNomE(String nomE);
     public void assignEtudianttoDepartement(Long idEtudiant,Long idDepart);
+    Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Long idContrat,Long idEquipe);
 }

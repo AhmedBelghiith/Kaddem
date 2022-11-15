@@ -23,13 +23,17 @@ public class Etudiant implements Serializable {
     private String nomE;
     @Enumerated(EnumType.STRING)
     private Option option;
-    @ManyToOne
-    Departement departement;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "etudiant")
-    private Set<Contrat>contrats;
+    @OneToMany(mappedBy = "etudiant")
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Equipe>equipes;
+    private Set<Contrat> contrats;
+    //onettomany unidirectionnel
+
+    @ManyToOne
+    private Departement departement;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "etudiants")
+    @JsonIgnore
+    private Set<Equipe> equipes;
 
 
 }

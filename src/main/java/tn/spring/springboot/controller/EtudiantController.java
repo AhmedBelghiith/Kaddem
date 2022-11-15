@@ -39,13 +39,25 @@ public class EtudiantController {
         return etudiantService.getEtudiantById(idEtudiant);
     }
 
-    @GetMapping("/findetudiantByP/{prenom}")
-    public Etudiant findEtudiantByPrenomE(@PathVariable("prenom") String prenom){
-        return etudiantService.findEtudiantByPrenomE(prenom);
+    @GetMapping("/findEtudiantByPrenomE/{prenomE}")
+    public Etudiant findEtudiantByPrenomE(@PathVariable("prenomE") String prenomE){
+        return etudiantService.findEtudiantByPrenomE(prenomE);
+    }
+
+    @GetMapping("/findEtudiantByNomE/{nomE}")
+    public Etudiant findEtudiantByNomE(@PathVariable("nomE") String nomE){
+        return etudiantService.findEtudiantByPrenomE(nomE);
     }
 
     @PostMapping("/assignEtudToDepart/{idEtudiant}/{idDepart}")
     public void assignEtudianttoDepartement(@PathVariable("idEtudiant") Long idEtudiant,@PathVariable("idDepart") Long idDepart){
         etudiantService.assignEtudianttoDepartement(idEtudiant,idDepart);
+    }
+
+   @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{idEquipe}/{idContrat}")
+   @ResponseBody
+    public Etudiant addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant e,@PathVariable("idEquipe") Long idEquipe,@PathVariable("idContrat") Long idContrat){
+        Etudiant etudiant =this.etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idEquipe,idContrat);
+        return etudiant;
     }
 }

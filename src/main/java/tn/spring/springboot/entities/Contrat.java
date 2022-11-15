@@ -1,5 +1,6 @@
 package tn.spring.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,5 +27,6 @@ public class Contrat implements Serializable {
     @Enumerated(EnumType.STRING)
     private Specialite specialite;
     @ManyToOne
-    Etudiant etudiant;
+    @JsonIgnore
+    private Etudiant etudiant;
 }
