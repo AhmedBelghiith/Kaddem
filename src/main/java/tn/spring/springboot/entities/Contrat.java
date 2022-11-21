@@ -23,7 +23,7 @@ public class Contrat implements Serializable {
     private Date dateDebutContrat;
     @Temporal(TemporalType.DATE)
     private Date dateFinContrat;
-    private Boolean archive;
+    private boolean archive;
     @Enumerated(EnumType.STRING)
     private Specialite specialite;
     @ManyToOne

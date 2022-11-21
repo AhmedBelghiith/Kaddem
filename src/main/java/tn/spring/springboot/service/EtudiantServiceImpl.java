@@ -84,4 +84,10 @@ public class EtudiantServiceImpl implements IEtudiantService{
         equipe.getEtudiants().add(e);
         return e;
     }
+    @Override
+    public Set<Etudiant> getEtudiantsByDepartement(Long idDepartement) {
+        Departement departement=departementRepository.findById(idDepartement).orElse(null);
+        Set<Etudiant> etudiants = departement.getEtudiants();
+        return etudiants;
+    }
 }

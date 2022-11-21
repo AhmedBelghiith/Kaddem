@@ -7,6 +7,7 @@ import tn.spring.springboot.entities.Etudiant;
 import tn.spring.springboot.service.IEtudiantService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -59,5 +60,10 @@ public class EtudiantController {
     public Etudiant addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant e,@PathVariable("idEquipe") Long idEquipe,@PathVariable("idContrat") Long idContrat){
         Etudiant etudiant =this.etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idEquipe,idContrat);
         return etudiant;
+    }
+
+    @GetMapping("/getEtudiantsByDepartement/{idDepart}")
+    public Set<Etudiant> getEtudiantsByDepartement(@PathVariable("idDepart") Long idDepart){
+        return  etudiantService.getEtudiantsByDepartement(idDepart);
     }
 }
