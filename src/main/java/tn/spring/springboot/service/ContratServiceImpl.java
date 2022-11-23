@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ContratServiceImpl implements IContratService{
+public class ContratServiceImpl implements IContratService {
 
     ContratRepository contratRepository;
     EtudiantRepository etudiantRepository;
@@ -38,14 +38,14 @@ public class ContratServiceImpl implements IContratService{
 
     @Override
     public Integer nbContratsValides(Date startDate, Date endDate) {
-        int j=0 ;
+        int j = 0;
 
-        List<Contrat> contrat= contratRepository.findAll();
+        List<Contrat> contrat = contratRepository.findAll();
 
-        for(int i=0;i<contrat.size();i++){
-            Contrat ct=contrat.get(i);
+        for (int i = 0; i < contrat.size(); i++) {
+            Contrat ct = contrat.get(i);
 
-            if(ct.isArchive()==false){
+            if (ct.isArchive() == false) {
                 j++;
             }
         }
@@ -54,41 +54,31 @@ public class ContratServiceImpl implements IContratService{
 
     @Override
     public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate) {
-        float CA=0;
-        int nbOfMonths=1;
-
-        List< Contrat> contrat= contratRepository.findAll();
-        for(int i=0;i<contrat.size();i++){
-            Contrat ct=contrat.get(i);
-            int dd=Integer.parseInt(ct.getDateDebutContrat().toString().substring(5,7));
-            int df=Integer.parseInt(ct.getDateFinContrat().toString().substring(5,7));
-
-            if((nbOfMonths*=(df-dd))==0){
-                nbOfMonths=1;
-            }else{
-                nbOfMonths=(df-dd);
+        float CA = 0;
+        List<Contrat> contrats = contratRepository.getContratByDate(startDate, endDate);
+        for (int i=0 ; i<contrats.size() ; i++){
+            Contrat ct= contrats.get(i);
+            if (ct.getSpecialite().toString()=="IA"){
+                int dd = Integer.parseInt(ct.getDateDebutContrat().toString().substring(5,7));
+                int df = Integer.parseInt(ct.getDateFinContrat().toString().substring(5,7));
+                CA += ((df-dd)*300);
+            } else if (ct.getSpecialite().toString()=="RESEAU") {
+                int dd = Integer.parseInt(ct.getDateDebutContrat().toString().substring(5,7));
+                int df = Integer.parseInt(ct.getDateFinContrat().toString().substring(5,7));
+                CA += ((df-dd)*350);
+            } else if (ct.getSpecialite().toString()=="CLOUD") {
+                int dd = Integer.parseInt(ct.getDateDebutContrat().toString().substring(5,7));
+                int df = Integer.parseInt(ct.getDateFinContrat().toString().substring(5,7));
+                CA += ((df-dd)*400);
+            } else if (ct.getSpecialite().toString()=="SECURITE") {
+                int dd = Integer.parseInt(ct.getDateDebutContrat().toString().substring(5,7));
+                int df = Integer.parseInt(ct.getDateFinContrat().toString().substring(5,7));
+                CA += ((df-dd)*450);
+            } else {
+                return CA;
             }
-            if(ct.isArchive()==false){
-
-                System.out.println("*******"+nbOfMonths);
-
-                if(ct.getSpecialite().toString()=="IA"){
-                    CA+=nbOfMonths*300;
-
-                }
-                else if(ct.getSpecialite().toString()=="RESEAUX"){
-                    CA+=nbOfMonths*350;
-                }
-                else if(ct.getSpecialite().toString()=="CLOUD"){
-                    CA+=nbOfMonths*400;
-                }
-                else if(ct.getSpecialite().toString()=="SECURITE"){
-                    CA+=nbOfMonths*450;
-                }
-
-            }
-
         }
         return CA;
     }
+
 }
