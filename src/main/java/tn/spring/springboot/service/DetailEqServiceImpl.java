@@ -20,6 +20,12 @@ public class DetailEqServiceImpl implements IDetailEqService {
     }
 
     @Override
+    public DetailEquipe getDetailEquipeById(Long idDetailEquipe) {
+        return detailEquipeRepository.findDetailEquipeByIdDetailEquipe(idDetailEquipe);
+    }
+
+
+    @Override
     public DetailEquipe addDetailEquipe(DetailEquipe detailEquipe) {
         return detailEquipeRepository.save(detailEquipe);
     }
@@ -37,5 +43,10 @@ public class DetailEqServiceImpl implements IDetailEqService {
     @Override
     public List<DetailEquipe> findByThematiqueLike(String thematique) {
         return detailEquipeRepository.findByThematiqueLike(thematique);
+    }
+
+    @Override
+    public List<DetailEquipe> findBySalleLike(String salle) {
+        return detailEquipeRepository.findBySalleLike(salle);
     }
 }

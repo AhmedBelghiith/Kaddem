@@ -7,35 +7,45 @@ import tn.spring.springboot.entities.DetailEquipe;
 import tn.spring.springboot.service.IDetailEqService;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 public class DetailEqController {
 
     IDetailEqService detailEqService;
 
-    @GetMapping("/getallDetailE")
+    @GetMapping("/getAllDetailEquipe")
     public List<DetailEquipe> getAllDetailEquipe(){
         return detailEqService.getAllDetailEquipe();
     }
 
-    @PostMapping("/addDetailE")
+    @GetMapping("/getDetailEquipeById/{idDetailEquipe}")
+    public DetailEquipe getDetailEquipeById(@PathVariable("idDetailEquipe") Long idDetailEquipe){
+        return detailEqService.getDetailEquipeById(idDetailEquipe);
+    }
+
+    @PostMapping("/addDetailEquipe")
     public DetailEquipe addDetailEquipe(@RequestBody DetailEquipe detailEquipe){
         return detailEqService.addDetailEquipe(detailEquipe);
     }
 
-    @PutMapping("/updateDetailE")
+    @PutMapping("/updateDetailEquipe")
     public DetailEquipe updateDetailEquipe(@RequestBody DetailEquipe detailEquipe) {
         return detailEqService.updateDetailEquipe(detailEquipe);
     }
 
-    @DeleteMapping("deleteDetailE/{id}")
-    public void deleteDetailEquipe(@PathVariable("id") Long id){
-        detailEqService.deleteDetailEquipe(id);
+    @DeleteMapping("deleteDetailEquipe/{idDetailEquipe}")
+    public void deleteDetailEquipe(@PathVariable("idDetailEquipe") Long idDetailEquipe){
+        detailEqService.deleteDetailEquipe(idDetailEquipe);
     }
 
-    @GetMapping("/findbythematique/{thematique}")
+    @GetMapping("/findByThematiqueLike/{thematique}")
     public List<DetailEquipe> findByThematiqueLike(@PathVariable("thematique") String thematique){
         return detailEqService.findByThematiqueLike(thematique);
+    }
+
+    @GetMapping("/findbysalle/{salle}")
+    public List<DetailEquipe> findBySalleLike(@PathVariable("salle") String salle){
+        return detailEqService.findBySalleLike(salle);
     }
 }

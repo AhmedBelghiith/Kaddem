@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface DetailEquipeRepository extends JpaRepository<DetailEquipe,Long> {
     List<DetailEquipe> findByThematiqueLike(String thematique);
+    List<DetailEquipe> findBySalleLike(String salle);
+    DetailEquipe findDetailEquipeByIdDetailEquipe(Long idDetailEquipe);
 }

@@ -3,7 +3,9 @@ package tn.spring.springboot.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.spring.springboot.entities.DetailEquipe;
 import tn.spring.springboot.entities.Equipe;
+import tn.spring.springboot.entities.Niveau;
 import tn.spring.springboot.repository.EquipeRepository;
 
 import java.util.List;
@@ -17,6 +19,21 @@ public class EquipeServiceImpl implements IEquipeService {
     @Override
     public List<Equipe> getAllEquipe() {
         return equipeRepository.findAll();
+    }
+
+    @Override
+    public Equipe findEquipeByIdEquipe(Long idEquipe) {
+        return equipeRepository.findEquipeByIdEquipe(idEquipe);
+    }
+
+    @Override
+    public List<Equipe> getEquipeByNomEquipe(String nomEquipe) {
+        return equipeRepository.findEquipeByNomEquipe(nomEquipe);
+    }
+
+    @Override
+    public List<Equipe> getEquipeByNiveau(Niveau niveau) {
+        return equipeRepository.findEquipeByNiveau(niveau);
     }
 
     @Override
@@ -35,8 +52,8 @@ public class EquipeServiceImpl implements IEquipeService {
     }
 
     @Override
-    public List<Equipe> findByEtudiantsIdEtudiant(Long idEtudiant) {
-        return equipeRepository.findByEtudiantsIdEtudiant(idEtudiant);
+    public List<Equipe> findEquipeByEtudiantsIdEtudiant(Long idEtudiant) {
+        return equipeRepository.findEquipeByEtudiantsIdEtudiant(idEtudiant);
     }
 
     @Override

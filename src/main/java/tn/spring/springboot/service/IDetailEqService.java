@@ -11,4 +11,6 @@ public interface IDetailEqService {
     DetailEquipe updateDetailEquipe(DetailEquipe detailEquipe);
     void deleteDetailEquipe (Long id);
     List<DetailEquipe> findByThematiqueLike(String thematique);
+    List<DetailEquipe> findBySalleLike(String salle);
+    DetailEquipe getDetailEquipeById(Long idDetailEquipe);
 }
