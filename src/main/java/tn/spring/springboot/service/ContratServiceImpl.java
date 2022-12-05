@@ -1,6 +1,7 @@
 package tn.spring.springboot.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.spring.springboot.entities.Contrat;
 import tn.spring.springboot.repository.ContratRepository;
@@ -79,6 +80,24 @@ public class ContratServiceImpl implements IContratService {
             }
         }
         return CA;
+    }
+
+    @Scheduled(cron = "* 06 15 * * *")
+    @Override
+    public String retrieveAndUpdateStatusContrat() {
+        List<Contrat> contrats= contratRepository.findAll();
+        contrats.forEach(contrat -> {
+            if (contratRepository.GetDaysById(contrat.getIdContrat())<=0 && !contrat.isArchive()){
+                contrat.setArchive(true);
+                contratRepository.save(contrat);
+                System.out.println("Le contrat de l'id: "+contrat.getIdContrat()+ " est archivé des que maintenant!");
+            } else if (contratRepository.GetDaysById(contrat.getIdContrat())<=15 && contratRepository.GetDaysById(contrat.getIdContrat())>0) {
+                System.out.println("Moins que 15jours restante pour le contrat de l'id: "+
+                        contrat.getIdContrat()+ "\nde specialité : "+contrat.getSpecialite()
+                        + "\nétudiant de l'id: "+ contrat.getEtudiant().getIdEtudiant());
+            }
+        });
+        return "";
     }
 
 }

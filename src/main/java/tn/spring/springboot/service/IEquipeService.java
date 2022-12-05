@@ -17,5 +17,6 @@ public interface IEquipeService {
     void deleteEquipe (Long id);
     List<Equipe> findEquipeByEtudiantsIdEtudiant(Long idEtudiant);
     List<Equipe> findEquipeByEtudiantsIdEtudiantAndEtudiantsDepartementIdDepart(Long idetdudiant,Long idDepart);
+    // void faireEvoluerEquipes();
 
 }

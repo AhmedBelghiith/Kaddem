@@ -13,6 +13,6 @@ public interface IContratService {
     void deleteContrat (Long id);
     public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate);
     public Integer nbContratsValides(Date startDate, Date endDate);
-
+    String retrieveAndUpdateStatusContrat();
 
 }
