@@ -1,5 +1,4 @@
 package tn.spring.springboot.service;
-
 import tn.spring.springboot.entities.DetailEquipe;
 
 
@@ -13,4 +12,13 @@ public interface IDetailEqService {
     List<DetailEquipe> findByThematiqueLike(String thematique);
     List<DetailEquipe> findBySalleLike(String salle);
     DetailEquipe getDetailEquipeById(Long idDetailEquipe);
+    public List<DetailEquipe> getAllDEquipes(Integer pageNo, Integer pageSize, String sortBy);
+    List<DetailEquipe> searchDetailEquipes(String query);
+
+    DetailEquipe findDetailEquipeByEquipe(Long idEquipe);
+
+    public List<DetailEquipe>getAllAsc();
+    public List<DetailEquipe>getAllDesc();
+    DetailEquipe addAndAssignDetailEquipeToEquipe(DetailEquipe detailEquipe, Long idEquipe);
+
 }

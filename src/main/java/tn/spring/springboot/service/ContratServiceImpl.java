@@ -82,7 +82,7 @@ public class ContratServiceImpl implements IContratService {
         return CA;
     }
 
-    @Scheduled(cron = "* 06 15 * * *")
+    /*@Scheduled(cron = "* 06 15 * * *")
     @Override
     public String retrieveAndUpdateStatusContrat() {
         List<Contrat> contrats= contratRepository.findAll();
@@ -98,6 +98,6 @@ public class ContratServiceImpl implements IContratService {
             }
         });
         return "";
-    }
+    }*/
 
 }

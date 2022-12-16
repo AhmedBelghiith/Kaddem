@@ -73,13 +73,9 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     // on va toucher plusieur tables (table --> entity managed) (.add(e) si exist add to equipe sinon add to etudiant then equipe
     @Transactional
-    @Override
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Long idContrat,Long idEquipe){
-       /* Etudiant etudiant= this.etudiantRepository.save(e);*/
         Equipe equipe=this.equipeRepository.findById(idEquipe).orElse(null);
         Contrat contrat=this.contratRepository.findById(idContrat).orElse(null);
-        /*etudiant.setEquipes((Set<Equipe>) equipe);
-        etudiant.setContrats((Set<Contrat>) contrat);*/
         contrat.setEtudiant(e);
         equipe.getEtudiants().add(e);
         return e;
@@ -90,4 +86,8 @@ public class EtudiantServiceImpl implements IEtudiantService{
         Set<Etudiant> etudiants = departement.getEtudiants();
         return etudiants;
     }
+
+
+
+
 }

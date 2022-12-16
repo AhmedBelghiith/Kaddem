@@ -66,4 +66,6 @@ public class EtudiantController {
     public Set<Etudiant> getEtudiantsByDepartement(@PathVariable("idDepart") Long idDepart){
         return  etudiantService.getEtudiantsByDepartement(idDepart);
     }
+
+
 }

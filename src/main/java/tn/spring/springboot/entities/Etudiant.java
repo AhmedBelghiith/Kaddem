@@ -21,6 +21,7 @@ public class Etudiant implements Serializable {
     private Long idEtudiant; // Clé primaire
     private String prenomE;
     private String nomE;
+    private float note;
     @Enumerated(EnumType.STRING)
     private Option option;
     @OneToMany(mappedBy = "etudiant")

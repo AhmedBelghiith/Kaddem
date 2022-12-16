@@ -1,17 +1,24 @@
 package tn.spring.springboot.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import tn.spring.springboot.entities.DetailEquipe;
+import tn.spring.springboot.entities.Departement;
 import tn.spring.springboot.entities.Equipe;
+import tn.spring.springboot.entities.Etudiant;
 import tn.spring.springboot.entities.Niveau;
 import tn.spring.springboot.repository.ContratRepository;
 import tn.spring.springboot.repository.EquipeRepository;
+import tn.spring.springboot.repository.EtudiantRepository;
 
 import javax.transaction.Transactional;
-import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -19,6 +26,7 @@ public class EquipeServiceImpl implements IEquipeService {
 
     EquipeRepository equipeRepository;
     ContratRepository contratRepository;
+    EtudiantRepository etudiantRepository;
 
     @Override
     public List<Equipe> getAllEquipe() {
@@ -65,6 +73,12 @@ public class EquipeServiceImpl implements IEquipeService {
         return equipeRepository.findEquipeByEtudiantsIdEtudiantAndEtudiantsDepartementIdDepart(idetdudiant,idDepart);
     }
 
+
+
+
+
+
+
    /* @Scheduled(cron = "0 * 13 * * *")
     @Override
     @Transactional
@@ -95,6 +109,70 @@ public class EquipeServiceImpl implements IEquipeService {
         }
 
     } */
+
+    @Override
+    public int getNbrEtudiantparEquipe(Long idEquipe) {
+        List<Etudiant> etudiants = this.etudiantRepository.findByEquipes_IdEquipe(idEquipe);
+        int nb = etudiants.size();
+        return nb;
+    }
+    @Override
+    public float getMoyenneEquipe(Long idEquipe){
+        float notes = 0;
+        List<Etudiant> etudiants = this.etudiantRepository.findByEquipes_IdEquipe(idEquipe);
+        int nb = etudiants.size();
+        for (int i=0;i<nb;i++){
+            Etudiant etudiant=etudiants.get(i);
+            notes += etudiant.getNote();
+        }
+        float moy= notes/nb;
+        return moy;
+    }
+
+    @Override
+    public List<Equipe> getAllEquipes(Integer pageNo, Integer pageSize, String sortBy)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+        Page<Equipe> pagedResult = equipeRepository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Equipe>();
+        }
+    }
+
+    @Override
+    public List<Equipe> getAllAsc() {
+        List<Equipe> equipes =equipeRepository.findAllAsc(Sort.by(Sort.Direction.ASC, "nomEquipe"));
+        return equipes;
+    }
+    @Override
+    public List<Equipe> getAllDesc() {
+        List<Equipe> equipes =equipeRepository.findAllDesc(Sort.by(Sort.Direction.DESC, "nomEquipe"));
+        return equipes;
+    }
+
+
+
+    @Override
+    public List<Equipe> searchEquipes(String query) {
+        List<Equipe> equipes = equipeRepository.searchEquipes(query);
+        return equipes;
+    }
+
+    @Transactional
+    @Override
+    public void assignEtudianttoEquipe(Long idEtudiant, Long idEquipe) {
+        Etudiant etudiant= this.etudiantRepository.findById(idEtudiant).orElse(null);
+        Equipe equipe= this.equipeRepository.findById(idEquipe).orElse(null);
+        equipe.getEtudiants().add(etudiant);
+        etudiant.getEquipes().add(equipe);
+
+        etudiantRepository.save(etudiant);
+        equipeRepository.save(equipe);
+    }
 
 
 }
